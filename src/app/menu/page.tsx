@@ -46,19 +46,26 @@ export default function MenuPage() {
     return (
       <Card className="overflow-hidden card-hover">
         <div className="relative h-44 bg-yum-surface">
-          <Image
-            src={item.image}
-            alt={item.name}
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
-            className="object-cover"
-          />
-          {item.badge ? (
-            <div className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold text-brand-deep ring-1 ring-black/10">
-              {item.badge}
-            </div>
-          ) : null}
-        </div>
+  {typeof item.image === "string" && item.image.trim().length > 0 ? (
+    <Image
+      src={item.image}
+      alt={item.name}
+      fill
+      sizes="(max-width: 768px) 100vw, 33vw"
+      className="object-cover"
+    />
+  ) : (
+    <div className="absolute inset-0 grid place-items-center text-sm text-yum-text-secondary">
+      No image
+    </div>
+  )}
+
+  {item.badge ? (
+    <div className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold text-brand-deep ring-1 ring-black/10">
+      {item.badge}
+    </div>
+  ) : null}
+</div>
 
         <div className="p-4 space-y-3">
           <div className="flex items-start justify-between gap-3">
