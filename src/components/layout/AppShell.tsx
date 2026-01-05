@@ -20,10 +20,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <CartProvider>
           <FavoritesProvider>
             <OrdersProvider>
-              <div className={`min-h-screen bg-yum-bg ${showBottomNav ? "pb-20" : "pb-0"}`}>
-                {children}
-                {showBottomNav ? <BottomNav /> : null}
-              </div>
+              {isAdmin ? (
+                <div className="min-h-screen bg-yum-bg">{children}</div>
+              ) : (
+                <div className="min-h-screen bg-neutral-100">
+                  {/* Centered phone-app frame */}
+                  <div className="mx-auto w-full max-w-[430px] min-h-screen bg-yum-bg ring-1 ring-black/5 shadow-xl">
+                    <div className={showBottomNav ? "pb-28" : ""}>{children}</div>
+                    {showBottomNav ? <BottomNav /> : null}
+                  </div>
+                </div>
+              )}
             </OrdersProvider>
           </FavoritesProvider>
         </CartProvider>

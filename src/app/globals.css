@@ -1,24 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #fee4cc;
-  --surface: #fff3e8;
-  --text-primary: #0b0b0b;
-  --text-secondary: #3b2a21;
+  /* App theme (GREEN like your mockup) */
+  --bg: #f2fff4;          /* light mint background inside app */
+  --surface: #ffffff;     /* cards */
+  --text-primary: #071a0d;
+  --text-secondary: #2c4a34;
 
-  --primary: #f88601;
-  --primary-pressed: #a73e14;
-  --sun: #ffbb35;
-  --deep: #ac1a08;
+  --primary: #148a2f;           /* main green */
+  --primary-pressed: #0f6d25;   /* darker green */
+  --sun: #c9f7d3;               /* soft highlight */
+  --deep: #0b5c1f;              /* deep green */
 }
 
 /* Base */
-html, body { height: 100%; }
-body { background: var(--bg); color: var(--text-primary); }
+html,
+body {
+  height: 100%;
+}
+
+/* Outer page background (so the "phone app frame" looks centered on desktop) */
+body {
+  background: #eef2f3;
+  color: var(--text-primary);
+}
+
+/* App-like feel */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
 
 /* Luxury motion (with accessibility fallback) */
 @media (prefers-reduced-motion: no-preference) {
-  @keyframes floaty { 0%{transform:translateY(0)} 50%{transform:translateY(-8px)} 100%{transform:translateY(0)} }
+  @keyframes floaty {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+  }
   .floaty { animation: floaty 5.2s ease-in-out infinite; }
 
   @keyframes shimmer {
@@ -27,13 +45,14 @@ body { background: var(--bg); color: var(--text-primary); }
     100% { transform: translateX(140%); opacity: 0.0; }
   }
 
-  .lux-shimmer::after{
-    content:"";
-    position:absolute; inset:-40% -60%;
+  .lux-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: -40% -60%;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
     transform: translateX(-60%);
     animation: shimmer 2.8s ease-in-out infinite;
-    pointer-events:none;
+    pointer-events: none;
   }
 
   @keyframes fadeUp {
@@ -55,5 +74,5 @@ body { background: var(--bg); color: var(--text-primary); }
   color: transparent;
 }
 
-/* Better page spacing on big screens */
+/* Better page spacing on big screens (kept for other pages if needed) */
 .container-max { max-width: 1120px; margin: 0 auto; }

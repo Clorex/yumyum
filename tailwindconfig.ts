@@ -10,23 +10,22 @@ export default {
     extend: {
       colors: {
         brand: {
-          // From your palette image
-          primary: "#F88601", // orange
-          pressed: "#A73E14", // brown (pressed)
-          deep: "#AC1A08", // deep red
-          sun: "#FFBB35", // yellow highlight
+          primary: "#148A2F",
+          pressed: "#0F6D25",
+          deep: "#0B5C1F",
+          sun: "#C9F7D3",
           black: "#000000",
         },
         yum: {
-          bg: "#FEE4CC", // peach background
-          surface: "#FFF3E8", // soft surface cards/sections
+          bg: "#F2FFF4",
+          surface: "#FFFFFF",
           text: {
-            primary: "#000000",
-            secondary: "#3B2A21", // warm dark brown text
+            primary: "#071A0D",
+            secondary: "#2C4A34",
           },
-          border: "#E9CDB7",
-          success: "#2DBE60",
-          warning: "#FFBB35",
+          border: "#D7E9DB",
+          success: "#148A2F",
+          warning: "#C9F7D3",
           error: "#AC1A08",
         },
       },
