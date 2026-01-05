@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #fee4cc;
+  --surface: #fff3e8;
+  --text-primary: #0b0b0b;
+  --text-secondary: #3b2a21;
+
+  --primary: #f88601;
+  --primary-pressed: #a73e14;
+  --sun: #ffbb35;
+  --deep: #ac1a08;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Base */
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--text-primary); }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Luxury motion (with accessibility fallback) */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes floaty { 0%{transform:translateY(0)} 50%{transform:translateY(-8px)} 100%{transform:translateY(0)} }
+  .floaty { animation: floaty 5.2s ease-in-out infinite; }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-60%); opacity: 0.0; }
+    20% { opacity: 0.45; }
+    100% { transform: translateX(140%); opacity: 0.0; }
   }
+
+  .lux-shimmer::after{
+    content:"";
+    position:absolute; inset:-40% -60%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: translateX(-60%);
+    animation: shimmer 2.8s ease-in-out infinite;
+    pointer-events:none;
+  }
+
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 420ms ease forwards; }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Card hover */
+.card-hover { transition: transform 180ms ease, box-shadow 180ms ease; }
+.card-hover:hover { transform: translateY(-2px); }
+
+/* Fancy gradient text */
+.lux-title {
+  background: linear-gradient(90deg, var(--primary), var(--sun), var(--primary-pressed));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
+
+/* Better page spacing on big screens */
+.container-max { max-width: 1120px; margin: 0 auto; }
