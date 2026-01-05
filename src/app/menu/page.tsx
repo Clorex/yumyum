@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Suspense } from "react"; // ✅ add this
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -13,7 +14,7 @@ import { formatNaira } from "@/lib/money";
 import type { MenuItem } from "@/data/menu";
 import { QuickAdd } from "@/components/cart/QuickAdd";
 
-export default function MenuPage() {
+function MenuInner() {
   const router = useRouter();
   const sp = useSearchParams();
 
@@ -46,36 +47,20 @@ export default function MenuPage() {
     return (
       <Card className="overflow-hidden card-hover">
         <div className="relative h-44 bg-yum-surface">
-  {typeof item.image === "string" && item.image.trim().length > 0 ? (
-    <Image
-      src={item.image}
-      alt={item.name}
-      fill
-      sizes="(max-width: 768px) 100vw, 33vw"
-      className="object-cover"
-    />
-  ) : (
-    <div className="absolute inset-0 grid place-items-center text-sm text-yum-text-secondary">
-      No image
-    </div>
-  )}
-
-  {item.badge ? (
-    <div className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold text-brand-deep ring-1 ring-black/10">
-      {item.badge}
-    </div>
-  ) : null}
-</div>
+          <Image
+            src={item.image}
+            alt={item.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover"
+          />
+        </div>
 
         <div className="p-4 space-y-3">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <p className="font-semibold truncate">{item.name}</p>
               <p className="text-sm text-yum-text-secondary">{item.description}</p>
-              <p className="mt-1 text-xs text-yum-text-secondary">
-                ~{item.prepMinutes ?? 20} mins
-                {item.spicy ? <span className="ml-2 font-semibold text-[color:var(--deep)]">Spicy</span> : null}
-              </p>
             </div>
 
             <p className="font-extrabold text-[color:var(--deep)] whitespace-nowrap">
@@ -83,7 +68,6 @@ export default function MenuPage() {
             </p>
           </div>
 
-          {/* THIS IS THE ORDER BUTTON YOU WANT */}
           <QuickAdd itemId={item.id} disabled={!item.inStock} />
         </div>
       </Card>
@@ -95,9 +79,6 @@ export default function MenuPage() {
       <div className="flex items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold">Menu</h1>
-          <p className="text-sm text-yum-text-secondary">
-            Tap <span className="font-semibold">Add to order</span> on any item.
-          </p>
         </div>
 
         <Link className="text-sm font-semibold text-[color:var(--deep)]" href="/cart">
@@ -128,8 +109,14 @@ export default function MenuPage() {
           <FoodCard key={item.id} item={item} />
         ))}
       </div>
-
-      <div className="h-10" />
     </main>
+  );
+}
+
+export default function MenuPage() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading menu…</div>}>
+      <MenuInner />
+    </Suspense>
   );
 }
